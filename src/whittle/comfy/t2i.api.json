@@ -1,0 +1,256 @@
+{
+  "340:337": {
+    "inputs": {
+      "string": [
+        "340:338",
+        0
+      ],
+      "find": "{subject}",
+      "replace": [
+        "340:339",
+        0
+      ]
+    },
+    "class_type": "StringReplace",
+    "_meta": {
+      "title": "Replace Text"
+    }
+  },
+  "340:338": {
+    "inputs": {
+      "value": "A stylized low poly 3D game asset of {subject}, single object, centered, full body visible, three-quarter front view.\nHand-whittled like a fisherman's wooden carving: chunky, slightly exaggerated proportions, built from a few large flat knife-cut facets with sharp hard edges.\nNatural colors true to the subject, but muted and sun-faded like old painted fishing tackle, using only two or three colors in total.\nEach facet painted one solid color in chalky matte paint, flat shading, no gradients, no wood grain.\nSoft even lighting, isolated object floating in empty pure white space, clean product cutout."
+    },
+    "class_type": "PrimitiveStringMultiline",
+    "_meta": {
+      "title": "Text (Multiline)"
+    }
+  },
+  "340:339": {
+    "inputs": {
+      "value": "barrel"
+    },
+    "class_type": "easy string",
+    "_meta": {
+      "title": "IN_subject"
+    }
+  },
+  "114:61": {
+    "inputs": {
+      "sampler_name": "euler"
+    },
+    "class_type": "KSamplerSelect",
+    "_meta": {
+      "title": "KSamplerSelect"
+    }
+  },
+  "114:62": {
+    "inputs": {
+      "steps": 20,
+      "width": [
+        "114:68",
+        0
+      ],
+      "height": [
+        "114:69",
+        0
+      ]
+    },
+    "class_type": "Flux2Scheduler",
+    "_meta": {
+      "title": "Flux2Scheduler"
+    }
+  },
+  "114:63": {
+    "inputs": {
+      "cfg": 5,
+      "model": [
+        "114:70",
+        0
+      ],
+      "positive": [
+        "114:74",
+        0
+      ],
+      "negative": [
+        "114:67",
+        0
+      ]
+    },
+    "class_type": "CFGGuider",
+    "_meta": {
+      "title": "CFG Guider"
+    }
+  },
+  "114:64": {
+    "inputs": {
+      "noise": [
+        "114:73",
+        0
+      ],
+      "guider": [
+        "114:63",
+        0
+      ],
+      "sampler": [
+        "114:61",
+        0
+      ],
+      "sigmas": [
+        "114:62",
+        0
+      ],
+      "latent_image": [
+        "114:66",
+        0
+      ]
+    },
+    "class_type": "SamplerCustomAdvanced",
+    "_meta": {
+      "title": "SamplerCustomAdvanced"
+    }
+  },
+  "114:65": {
+    "inputs": {
+      "samples": [
+        "114:64",
+        0
+      ],
+      "vae": [
+        "114:72",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "114:66": {
+    "inputs": {
+      "width": [
+        "114:68",
+        0
+      ],
+      "height": [
+        "114:69",
+        0
+      ],
+      "batch_size": 1
+    },
+    "class_type": "EmptyFlux2LatentImage",
+    "_meta": {
+      "title": "Empty Flux 2 Latent"
+    }
+  },
+  "114:67": {
+    "inputs": {
+      "text": "",
+      "clip": [
+        "114:71",
+        0
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Negative Prompt)"
+    }
+  },
+  "114:68": {
+    "inputs": {
+      "value": 1024
+    },
+    "class_type": "PrimitiveInt",
+    "_meta": {
+      "title": "Width"
+    }
+  },
+  "114:69": {
+    "inputs": {
+      "value": 1024
+    },
+    "class_type": "PrimitiveInt",
+    "_meta": {
+      "title": "Height"
+    }
+  },
+  "114:73": {
+    "inputs": {
+      "noise_seed": [
+        "900",
+        0
+      ]
+    },
+    "class_type": "RandomNoise",
+    "_meta": {
+      "title": "RandomNoise"
+    }
+  },
+  "114:70": {
+    "inputs": {
+      "unet_name": "flux-2-klein-base-9b-fp8.safetensors",
+      "weight_dtype": "default"
+    },
+    "class_type": "UNETLoader",
+    "_meta": {
+      "title": "Load Diffusion Model"
+    }
+  },
+  "114:71": {
+    "inputs": {
+      "clip_name": "qwen_3_8b_fp8mixed.safetensors",
+      "type": "flux2",
+      "device": "default"
+    },
+    "class_type": "CLIPLoader",
+    "_meta": {
+      "title": "Load CLIP"
+    }
+  },
+  "114:72": {
+    "inputs": {
+      "vae_name": "full_encoder_small_decoder.safetensors"
+    },
+    "class_type": "VAELoader",
+    "_meta": {
+      "title": "Load VAE"
+    }
+  },
+  "114:74": {
+    "inputs": {
+      "text": [
+        "340:337",
+        0
+      ],
+      "clip": [
+        "114:71",
+        0
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Positive Prompt)"
+    }
+  },
+  "341": {
+    "inputs": {
+      "filename_prefix": "whittle/t2i",
+      "images": [
+        "114:65",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "OUT_image"
+    }
+  },
+  "900": {
+    "inputs": {
+      "value": 0
+    },
+    "class_type": "PrimitiveInt",
+    "_meta": {
+      "title": "IN_seed"
+    }
+  }
+}

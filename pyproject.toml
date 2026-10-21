@@ -1,0 +1,28 @@
+[project]
+name = "whittle"
+version = "0.1.0"
+description = "Generate images and image-based 3D models with ComfyUI, decimate them into low-poly game props with Blender, and review both in a Gradio UI."
+readme = "README.md"
+license = "AGPL-3.0-or-later"
+license-files = ["LICENSE"]
+authors = [
+    { name = "RogelioKG", email = "rogeliokg0813@gmail.com" }
+]
+requires-python = ">=3.13"
+dependencies = [
+    "gradio>=6.30.0",
+    "pydantic>=2.14.1",
+]
+
+[project.scripts]
+whittle = "whittle.__main__:main"
+
+[build-system]
+requires = ["uv_build>=0.13.2,<0.14.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "fake-bpy-module-5-2>=20260730",
+    "ruff>=0.17.1",
+]

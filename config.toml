@@ -1,0 +1,18 @@
+# Copy to ~/whittle/config.toml, or pass with --config.
+# Every key is optional; omitted keys use the defaults shown here.
+# Relative paths are relative to this file's directory.
+projects = "projects"
+
+[comfyui]
+url = "http://127.0.0.1:8188"
+# Defaults to the workflows bundled with whittle
+# t2i_workflow = "t2i.api.json"
+# i2m_workflow = "i2m.api.json"
+
+[blender]
+exe = "blender"
+# Defaults to the script bundled with whittle
+# script = "process_mesh.py"
+
+[review]
+candidates = 4

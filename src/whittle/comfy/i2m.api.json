@@ -1,0 +1,161 @@
+{
+  "327": {
+    "inputs": {
+      "filename_prefix": "whittle/i2m",
+      "image": "",
+      "mesh": [
+        "335:9",
+        0
+      ]
+    },
+    "class_type": "SaveGLB",
+    "_meta": {
+      "title": "OUT_mesh"
+    }
+  },
+  "335:9": {
+    "inputs": {
+      "algorithm": "surface net",
+      "threshold": 0.6,
+      "voxel": [
+        "335:8",
+        0
+      ]
+    },
+    "class_type": "VoxelToMesh",
+    "_meta": {
+      "title": "Voxel to Mesh"
+    }
+  },
+  "335:8": {
+    "inputs": {
+      "num_chunks": 8000,
+      "octree_resolution": 256,
+      "samples": [
+        "335:7",
+        0
+      ],
+      "vae": [
+        "335:1",
+        2
+      ]
+    },
+    "class_type": "VAEDecodeHunyuan3D",
+    "_meta": {
+      "title": "Hunyuan 3D VAE Decode"
+    }
+  },
+  "335:7": {
+    "inputs": {
+      "seed": [
+        "900",
+        0
+      ],
+      "steps": 30,
+      "cfg": 5,
+      "sampler_name": "euler",
+      "scheduler": "normal",
+      "denoise": 1,
+      "model": [
+        "335:3",
+        0
+      ],
+      "positive": [
+        "335:6",
+        0
+      ],
+      "negative": [
+        "335:6",
+        1
+      ],
+      "latent_image": [
+        "335:4",
+        0
+      ]
+    },
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "KSampler"
+    }
+  },
+  "335:6": {
+    "inputs": {
+      "clip_vision_output": [
+        "335:13",
+        0
+      ]
+    },
+    "class_type": "Hunyuan3Dv2Conditioning",
+    "_meta": {
+      "title": "Hunyuan3Dv2Conditioning"
+    }
+  },
+  "335:4": {
+    "inputs": {
+      "resolution": 4096,
+      "batch_size": 1
+    },
+    "class_type": "EmptyLatentHunyuan3Dv2",
+    "_meta": {
+      "title": "Empty Hunyuan 3D v2 Latent"
+    }
+  },
+  "335:13": {
+    "inputs": {
+      "crop": "center",
+      "clip_vision": [
+        "335:1",
+        1
+      ],
+      "image": [
+        "342",
+        0
+      ]
+    },
+    "class_type": "CLIPVisionEncode",
+    "_meta": {
+      "title": "CLIP Vision Encode"
+    }
+  },
+  "335:3": {
+    "inputs": {
+      "shift": 1,
+      "sampling": "flow",
+      "model": [
+        "335:1",
+        0
+      ]
+    },
+    "class_type": "ModelSamplingAuraFlow",
+    "_meta": {
+      "title": "ModelSamplingAuraFlow"
+    }
+  },
+  "335:1": {
+    "inputs": {
+      "ckpt_name": "hunyuan_3d_v2.1.safetensors"
+    },
+    "class_type": "ImageOnlyCheckpointLoader",
+    "_meta": {
+      "title": "Load Checkpoint Image Only (img2vid model)"
+    }
+  },
+  "342": {
+    "inputs": {
+      "image": "placeholder.png"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "IN_image"
+    }
+  },
+  "900": {
+    "inputs": {
+      "value": 0
+    },
+    "class_type": "PrimitiveInt",
+    "_meta": {
+      "title": "IN_seed"
+    }
+  }
+}
